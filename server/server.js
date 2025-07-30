@@ -32,6 +32,24 @@ app.use('/api/movies', moviesRoutes);
 // 搜索路由
 app.use('/api/search', searchRoutes);
 
+// 根路由 - 处理健康检查
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'MovieWebsite API Server is running!', 
+    status: 'healthy',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// API状态检查路由
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'healthy', 
+    message: 'API is working properly',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // 错误处理中间件
 app.use(errorHandler);
 
