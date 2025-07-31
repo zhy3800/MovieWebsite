@@ -1,9 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import api from '../utils/auth';
 
 export default function HotMovies() {
   const [movies, setMovies] = useState([]);
@@ -27,10 +27,10 @@ export default function HotMovies() {
       };
       
       // 获取所有电影
-      const url = 'http://localhost:5000/api/movies';
+      const url = '/movies';
       console.log('请求URL:', url);
       
-      const response = await axios.get(url, config);
+      const response = await api.get(url, config);
       console.log('API响应数据:', response.data);
       
       const movieData = response.data.movies || response.data;
@@ -40,8 +40,8 @@ export default function HotMovies() {
         try {
           // 获取收藏数和评论数
           const [favoritesRes, commentsRes] = await Promise.all([
-            axios.get(`http://localhost:5000/api/favorites/count/${movie.id}`),
-            axios.get(`http://localhost:5000/api/comments/count/${movie.id}`)
+            api.get(`/favorites/count/${movie.id}`),
+            api.get(`/comments/count/${movie.id}`)
           ]);
           
           return {
@@ -201,4 +201,4 @@ export default function HotMovies() {
       </div>
     </div>
   );
-} 
+}

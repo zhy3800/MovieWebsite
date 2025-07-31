@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -30,7 +30,7 @@ export default function FavoritesPage() {
 
   const fetchFavorites = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/favorites/user/${userId}`);
+      const response = await api.get(`/favorites/user/${userId}`);
       setFavorites(response.data);
       setLoading(false);
     } catch (error) {
@@ -95,4 +95,4 @@ export default function FavoritesPage() {
       </main>
     </div>
   );
-} 
+}

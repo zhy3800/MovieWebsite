@@ -1,9 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import api from '../utils/auth';
 
 export default function HomePage() {
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function HomePage() {
 
   const fetchMovies = async (page) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/movies', {
+      const response = await api.get('/movies', {
         params: {
           page: page,
           limit: moviesPerPage

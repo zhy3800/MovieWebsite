@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import api from '../utils/auth';
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -12,7 +12,7 @@ export default function MoviesPage() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/movies');
+        const response = await api.get('/movies');
         setMovies(response.data.movies);
         setLoading(false);
       } catch (error) {
@@ -97,4 +97,4 @@ export default function MoviesPage() {
       </main>
     </div>
   );
-} 
+}

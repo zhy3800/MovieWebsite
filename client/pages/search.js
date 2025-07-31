@@ -1,9 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchBar from '../components/SearchBar';
+import api from '../utils/auth';
 
 export default function MovieSearchPage() {
   const [movies, setMovies] = useState([]);
@@ -29,7 +29,7 @@ export default function MovieSearchPage() {
 
     try {
       console.log(`搜索: ${searchTerm}, 页码: ${page}, 每页: ${moviesPerPage}`);
-      const response = await axios.get('http://localhost:5000/api/search/movies', {
+      const response = await api.get('/search/movies', {
         params: {
           query: searchTerm,
           page,
