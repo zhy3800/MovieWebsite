@@ -1,0 +1,42 @@
+services:
+  # 后端 API 服务
+  - type: web
+    name: moviewebsite-api
+    env: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: moviewebsite-db
+          property: host
+      - key: DB_USER
+        fromDatabase:
+          name: moviewebsite-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: moviewebsite-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: moviewebsite-db
+          property: database
+      - key: JWT_SECRET
+        generateValue: true
+
+  # 前端静态网站
+  - type: static
+    name: moviewebsite-frontend
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/out
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://moviewebsite-api.onrender.com
+
+databases:
+  - name: moviewebsite-db
+    databaseName: movie_db
+    user: movieuser
